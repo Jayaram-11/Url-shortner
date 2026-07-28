@@ -8,7 +8,7 @@ logger=logging.getLogger(__name__)
 
 
 def password_validation(password)-> bool:
-    if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%*^])[A-Za-z\d@#$%^]{5,}$", password):
+    if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%*^])[A-Za-z\d@#$%^]{5,16}$", password):
         return True
     return False
 

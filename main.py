@@ -6,13 +6,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI,HTTPException,status,Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import RedirectResponse
-from model import URL,UserAccount,LoginAccount
+from model import URL,UserAccount
 from validation import email_password_validation,validate_account,login_verification
 from database import (create_mapping,get_original_url,map_user_customized_code,
                       delete_mapping,list_mappings,update_click_count,update_custom_code,
                       check_custom_code_exist,fetch_all_details,create_table)
 from security import encode_jwt,decode_jwt
-
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 DOMAIN=os.getenv("DOMAIN")
@@ -30,6 +30,19 @@ async def lifespan(app:FastAPI):
 
 
 app=FastAPI(lifespan=lifespan)
+
+orgins=[
+    "http://localhost:5174",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=orgins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+
+)
+
 
 @app.get("/",status_code=status.HTTP_200_OK)
 def health_check():
@@ -372,3 +385,5 @@ async def update_url(old_custom_code:str,new_custom_code:str,payload=Depends(dec
 
 ## TODO : DOne -> error fixed.. just moved the dashboard endpoitn up.
 # isseu was that delete, retrive, update had/{} so dashboard into this.
+
+## TODO: The custom code size should be atleast 6 chars

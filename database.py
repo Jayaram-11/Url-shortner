@@ -154,6 +154,9 @@ def get_original_url(short_code):
 
 # query param is the custom url/short code that users wishes to delete
 def delete_mapping(custom_code,user_id):
+    code_exist=check_custom_code_exist(user_id,custom_code)
+    if not code_exist:
+        return False
     try:
         with create_connection() as conn:
             cursor=conn.cursor()
