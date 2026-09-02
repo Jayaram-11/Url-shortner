@@ -521,3 +521,77 @@ body {
   font-size: 0.875rem;
   color: inherit;
 }
+
+/* ── QR Code "View" button inside table ───────────────────────── */
+.btn-qr-view {
+  background: none;
+  border: 1px solid #4a90e2;
+  border-radius: 4px;
+  color: #4a90e2;
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.btn-qr-view:hover {
+  background-color: #eaf2ff;
+}
+
+/* ── QR Code Modal ────────────────────────────────────────────── */
+.qr-modal-backdrop {
+  position: fixed;
+  inset: 0;                       /* top/right/bottom/left: 0 */
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.qr-modal-box {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  overflow: hidden;
+}
+
+.qr-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.qr-modal-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.qr-modal-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+  padding: 0;
+}
+
+.qr-modal-close:hover {
+  color: #333;
+}
+
+.qr-modal-body {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.qr-modal-image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}

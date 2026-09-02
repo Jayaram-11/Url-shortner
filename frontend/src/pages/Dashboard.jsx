@@ -2,12 +2,16 @@
 // Section 1: Top 5 URLs by click count (from /dashboard endpoint)
 // Section 2: All user URLs (from /my-urls endpoint)
 //
-// NOTE: /my-urls does NOT return click_count, so the "My Links" table
+// Both tables have a "QR Code" column with a "View" button.
+// Clicking "View" opens a modal showing the QR code image.
+//
+// NOTE: /my-urls does NOT return click_count, so "My Links" table
 //       does not include a click count column.
 
 import { useState, useEffect } from "react";
 import { getDashboard, getMyUrls } from "../services/api";
 import LinkTable from "../components/LinkTable";
+import QrModal from "../components/QrModal";
 import Loader from "../components/Loader";
 
 // Columns for the Top 5 dashboard table (includes click_count from /dashboard)
@@ -38,6 +42,9 @@ function Dashboard() {
   const [dashboardError, setDashboardError] = useState("");
   const [myUrlsError, setMyUrlsError] = useState("");
 
+  // QR modal state — stores the qr_url of the row whose "View" was clicked
+  const [activeQrUrl, setActiveQrUrl] = useState(null);
+
   // Fetch top 5 URLs from /dashboard
   useEffect(() => {
     async function fetchDashboard() {
@@ -49,7 +56,6 @@ function Dashboard() {
       } else {
         const code = res.data?.detail?.error?.code;
         if (code === "NOT_FOUND") {
-          // User has no URLs yet; not a real error
           setTopUrls([]);
         } else {
           setDashboardError("Failed to load dashboard data.");
@@ -69,7 +75,6 @@ function Dashboard() {
       } else {
         const code = res.data?.detail?.error?.code;
         if (code === "NOT_FOUND") {
-          // No URLs yet
           setMyUrls([]);
         } else {
           setMyUrlsError("Failed to load your URLs.");
@@ -89,7 +94,11 @@ function Dashboard() {
         {dashboardLoading && <p><Loader /></p>}
         {dashboardError && <p className="message message-error">{dashboardError}</p>}
         {!dashboardLoading && !dashboardError && (
-          <LinkTable columns={dashboardColumns} rows={topUrls} />
+          <LinkTable
+            columns={dashboardColumns}
+            rows={topUrls}
+            onQrView={(qrUrl) => setActiveQrUrl(qrUrl)}
+          />
         )}
       </section>
 
@@ -99,9 +108,21 @@ function Dashboard() {
         {myUrlsLoading && <p><Loader /></p>}
         {myUrlsError && <p className="message message-error">{myUrlsError}</p>}
         {!myUrlsLoading && !myUrlsError && (
-          <LinkTable columns={myUrlsColumns} rows={myUrls} />
+          <LinkTable
+            columns={myUrlsColumns}
+            rows={myUrls}
+            onQrView={(qrUrl) => setActiveQrUrl(qrUrl)}
+          />
         )}
       </section>
+
+      {/* QR code modal — shown when any "View" button is clicked */}
+      {activeQrUrl && (
+        <QrModal
+          qrUrl={activeQrUrl}
+          onClose={() => setActiveQrUrl(null)}
+        />
+      )}
     </div>
   );
 }

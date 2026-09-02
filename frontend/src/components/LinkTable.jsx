@@ -1,12 +1,16 @@
 // LinkTable - reusable table component for displaying URL records.
 // Accepts:
-//   columns: array of { key, label } objects defining the columns to show
-//   rows:    array of data objects (each row is one URL record)
+//   columns   : array of { key, label } objects defining the columns to show
+//   rows      : array of data objects (each row is one URL record)
+//   onQrView  : optional callback(qrUrl) — when provided, adds a "QR Code" column
+//               with a "View" button in each row that calls onQrView(row.qr_url)
 
-function LinkTable({ columns, rows }) {
+function LinkTable({ columns, rows, onQrView }) {
   if (!rows || rows.length === 0) {
     return <p className="no-data">No records found.</p>;
   }
+
+  const showQrColumn = typeof onQrView === "function";
 
   return (
     <div className="table-wrapper">
@@ -16,6 +20,7 @@ function LinkTable({ columns, rows }) {
             {columns.map((col) => (
               <th key={col.key}>{col.label}</th>
             ))}
+            {showQrColumn && <th>QR Code</th>}
           </tr>
         </thead>
         <tbody>
@@ -37,6 +42,20 @@ function LinkTable({ columns, rows }) {
                   )}
                 </td>
               ))}
+              {showQrColumn && (
+                <td>
+                  {row.qr_url ? (
+                    <button
+                      className="btn-qr-view"
+                      onClick={() => onQrView(row.qr_url)}
+                    >
+                      View
+                    </button>
+                  ) : (
+                    <span className="no-data">—</span>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

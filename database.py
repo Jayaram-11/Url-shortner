@@ -3,7 +3,7 @@ import sqlite3
 import logging
 from dotenv import load_dotenv
 import os
-from utils import generate_short_code
+from utils import generate_short_code,create_qr_code
 
 
 DB_NAME='Mappings.db'
@@ -181,6 +181,7 @@ def list_mappings(user_id):
                     "custom_code":row[1],
                     "custom_url": f"{DOMAIN}/{row[1]}",
                     "created_at": row[2],
+                    "qr_url": f"{DOMAIN}/QR_codes/{row[1]}_qrcode.png"
                 })
             return url_mappings
 
@@ -262,7 +263,8 @@ def fetch_all_details(user_id):
                     "custom_code": row[1],
                     "custom_url": f"{DOMAIN}/{row[1]}",
                     "click_count": row[2],
-                    "created_at": row[3]
+                    "created_at": row[3],
+                    "qr_url":f"{DOMAIN}/QR_codes/{row[1]}_qrcode.png"
                 })
             return user_details
 

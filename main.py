@@ -7,12 +7,13 @@ from fastapi import FastAPI,HTTPException,status,Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import RedirectResponse
 from model import URL,UserAccount
-from validation import email_password_validation,validate_account,login_verification
+from validation import email_password_validation,validate_account,login_verification,validate_custom_code
 from database import (create_mapping,get_original_url,map_user_customized_code,
                       delete_mapping,list_mappings,update_click_count,update_custom_code,
                       check_custom_code_exist,fetch_all_details,create_table)
 from security import encode_jwt,decode_jwt
 from fastapi.middleware.cors import CORSMiddleware
+from utils import create_qr_code,delete_qr_code
 
 load_dotenv()
 DOMAIN=os.getenv("DOMAIN")
@@ -33,6 +34,7 @@ app=FastAPI(lifespan=lifespan)
 
 orgins=[
     "http://localhost:5174",
+    "http://localhost:5173"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -175,6 +177,8 @@ async def shorten_url(data: URL,payload=Depends(decode_jwt)):
             }
         )
     short_url = f"{DOMAIN}/{short_code}"
+    create_qr_code(short_url,short_code)
+
     return{
         "success": True,
         "data":{
@@ -183,6 +187,9 @@ async def shorten_url(data: URL,payload=Depends(decode_jwt)):
         "message":"Short Url created",
 
     }
+
+
+
 
 @app.post("/customize-url",status_code=status.HTTP_201_CREATED)
 async def customized_url(custom_code:str,original_url:URL,payload=Depends(decode_jwt)):
@@ -197,7 +204,21 @@ async def customized_url(custom_code:str,original_url:URL,payload=Depends(decode
                 }
             }
         )
+
     user_id=payload["user_id"]
+    custom_code_success = validate_custom_code(custom_code)
+
+    if not custom_code_success:
+        raise HTTPException(
+            status_code=status.HTTP_411_LENGTH_REQUIRED,
+            detail={
+                "success":False,
+                "error":{
+                    "code":"LENGTH_REQUIRED",
+                    "message":"Custom code length should be greater than 7 and less than 32"
+                }
+            }
+        )
     custom_url_created=map_user_customized_code(user_id,custom_code,original_url.url,)
     if  not custom_url_created:
         raise HTTPException(
@@ -211,6 +232,7 @@ async def customized_url(custom_code:str,original_url:URL,payload=Depends(decode
             }
         )
     full_url=f"{DOMAIN}/{custom_code}"
+    create_qr_code(full_url,custom_code)
     return {
         "success": True,
         "data":{
@@ -303,6 +325,7 @@ async def delete_url(custom_code:str,payload=Depends(decode_jwt)):
     # use the url parser to extract the short code alone
     #short_code=extract_short_code(custom_code)
     deletion_successful=delete_mapping(custom_code,user_id)
+    delete_qr_code(custom_code)
     if not deletion_successful:
         raise  HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -380,10 +403,6 @@ async def update_url(old_custom_code:str,new_custom_code:str,payload=Depends(dec
     }
 
 
-## TODO: dash board is showing NOT_FOUND error. but the error msg is having requested url not found
-## THis msg belongs to retrive_url adn delete url enpoint. so check ti
+## ONCE AGY LIMIT RESET , PASTE THE PROMPT IN NOTEPAD
 
-## TODO : DOne -> error fixed.. just moved the dashboard endpoitn up.
-# isseu was that delete, retrive, update had/{} so dashboard into this.
-
-## TODO: The custom code size should be atleast 6 chars
+## TODO: email verification by sending email to email given in account creatin

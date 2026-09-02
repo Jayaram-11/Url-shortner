@@ -51,3 +51,6 @@ def login_verification(email,password)-> bool:
     return True
 
 
+def validate_custom_code(custom_code)-> bool:
+    return 7<=len(custom_code)<=32
+
