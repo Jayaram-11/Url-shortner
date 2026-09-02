@@ -6,3 +6,5 @@ PyJWT
 email-validator
 bcrypt
 python-multipart
+pytest
+httpx
