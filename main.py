@@ -34,7 +34,8 @@ app=FastAPI(lifespan=lifespan)
 
 orgins=[
     "http://localhost:5174",
-    "http://localhost:5173"
+    "http://localhost:5173",
+
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -404,5 +405,6 @@ async def update_url(old_custom_code:str,new_custom_code:str,payload=Depends(dec
 
 
 ## ONCE AGY LIMIT RESET , PASTE THE PROMPT IN NOTEPAD
+
 
 ## TODO: email verification by sending email to email given in account creatin

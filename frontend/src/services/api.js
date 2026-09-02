@@ -1,7 +1,7 @@
 // All backend API calls are made from this file.
 // React components should never call fetch() directly.
 
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://url-shortner-aku3.onrender.com";
 
 // Helper: get JWT token from localStorage
 function getToken() {
