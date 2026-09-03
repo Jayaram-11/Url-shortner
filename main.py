@@ -216,7 +216,7 @@ async def customized_url(custom_code:str,original_url:URL,payload=Depends(decode
                 "success":False,
                 "error":{
                     "code":"LENGTH_REQUIRED",
-                    "message":"Custom code length should be greater than 7 and less than 32"
+                    "message":"Custom code length should be greater than 5 and less than 32"
                 }
             }
         )
@@ -384,7 +384,18 @@ async def update_url(old_custom_code:str,new_custom_code:str,payload=Depends(dec
                 }
             }
         )
-
+    validate_new_custom_code=validate_custom_code(new_custom_code)
+    if not validate_new_custom_code:
+        raise HTTPException(
+            status_code=status.HTTP_411_LENGTH_REQUIRED,
+            detail={
+                "success": False,
+                "error": {
+                    "code": "LENGTH_REQUIRED",
+                    "message": "Custom code length should be greater than 5 and less than 32"
+                }
+            }
+        )
     success=update_custom_code(user_id,old_custom_code,new_custom_code)
     if not success:
         raise HTTPException(
