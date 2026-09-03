@@ -44,10 +44,10 @@ function LinkTable({ columns, rows, onQrView }) {
               ))}
               {showQrColumn && (
                 <td>
-                  {row.qr_url ? (
+                  {row.custom_code ? (
                     <button
                       className="btn-qr-view"
-                      onClick={() => onQrView(row.qr_url)}
+                      onClick={() => onQrView(row.custom_code)}
                     >
                       View
                     </button>

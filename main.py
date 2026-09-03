@@ -13,6 +13,7 @@ from database import (create_mapping,get_original_url,map_user_customized_code,
                       check_custom_code_exist,fetch_all_details,create_table)
 from security import encode_jwt,decode_jwt
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from utils import create_qr_code,delete_qr_code
 
 load_dotenv()
@@ -31,6 +32,8 @@ async def lifespan(app:FastAPI):
 
 
 app=FastAPI(lifespan=lifespan)
+
+app.mount("/QR_codes", StaticFiles(directory="QR_codes"),name="qr_codes")
 
 orgins=[
     "http://localhost:5174",

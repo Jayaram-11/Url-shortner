@@ -86,6 +86,8 @@ function CustomizeSection() {
       const code = res.data?.detail?.error?.code;
       if (code === "CUSTOM_URL_EXIST") {
         setError("This custom code already exists. Please choose another.");
+      } else if (code === "LENGTH_REQUIRED") {
+        setError("Custom code length should be between 5 and 32.");
       } else {
         setError("Failed to create custom URL. Please try again.");
       }
@@ -224,6 +226,8 @@ function UpdateSection() {
       const code = res.data?.detail?.error?.code;
       if (code === "CUSTOM_URL_EXIST") {
         setMessage("New code already exists. Choose a different one.");
+      } else if (code === "LENGTH_REQUIRED") {
+        setMessage("Custom code length should be between 5 and 32.");
       } else {
         setMessage("Code does not exist");
       }

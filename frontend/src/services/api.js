@@ -127,3 +127,19 @@ export async function getDashboard() {
   const data = await response.json();
   return { ok: response.ok, status: response.status, data };
 }
+
+// GET /QR_codes/{custom_code}_qrcode.png
+// Fetches the QR code image as a blob using BASE_URL so the correct
+// deployed domain is always used, regardless of what qr_url the
+// backend returns (which may contain the wrong DOMAIN from its .env).
+export async function getQrCode(customCode) {
+  const response = await fetch(
+    `${BASE_URL}/QR_codes/${encodeURIComponent(customCode)}_qrcode.png`
+  );
+  if (!response.ok) {
+    return { ok: false, blobUrl: null };
+  }
+  const blob = await response.blob();
+  const blobUrl = URL.createObjectURL(blob);
+  return { ok: true, blobUrl };
+}

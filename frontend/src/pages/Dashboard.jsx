@@ -42,8 +42,8 @@ function Dashboard() {
   const [dashboardError, setDashboardError] = useState("");
   const [myUrlsError, setMyUrlsError] = useState("");
 
-  // QR modal state — stores the qr_url of the row whose "View" was clicked
-  const [activeQrUrl, setActiveQrUrl] = useState(null);
+  // QR modal state — stores the custom_code of the row whose "View" was clicked
+  const [activeQrCode, setActiveQrCode] = useState(null);
 
   // Fetch top 5 URLs from /dashboard
   useEffect(() => {
@@ -97,7 +97,7 @@ function Dashboard() {
           <LinkTable
             columns={dashboardColumns}
             rows={topUrls}
-            onQrView={(qrUrl) => setActiveQrUrl(qrUrl)}
+            onQrView={(customCode) => setActiveQrCode(customCode)}
           />
         )}
       </section>
@@ -111,16 +111,16 @@ function Dashboard() {
           <LinkTable
             columns={myUrlsColumns}
             rows={myUrls}
-            onQrView={(qrUrl) => setActiveQrUrl(qrUrl)}
+            onQrView={(customCode) => setActiveQrCode(customCode)}
           />
         )}
       </section>
 
       {/* QR code modal — shown when any "View" button is clicked */}
-      {activeQrUrl && (
+      {activeQrCode && (
         <QrModal
-          qrUrl={activeQrUrl}
-          onClose={() => setActiveQrUrl(null)}
+          customCode={activeQrCode}
+          onClose={() => setActiveQrCode(null)}
         />
       )}
     </div>
