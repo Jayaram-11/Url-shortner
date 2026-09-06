@@ -38,6 +38,7 @@ app.mount("/QR_codes", StaticFiles(directory="QR_codes"),name="qr_codes")
 orgins=[
     "http://localhost:5174",
     "http://localhost:5173",
+    "https://url-shortner-rho-lac.vercel.app/"
 
 ]
 app.add_middleware(
@@ -191,8 +192,6 @@ async def shorten_url(data: URL,payload=Depends(decode_jwt)):
         "message":"Short Url created",
 
     }
-
-
 
 
 @app.post("/customize-url",status_code=status.HTTP_201_CREATED)
@@ -418,7 +417,7 @@ async def update_url(old_custom_code:str,new_custom_code:str,payload=Depends(dec
     }
 
 
-## ONCE AGY LIMIT RESET , PASTE THE PROMPT IN NOTEPAD
+
 
 
 ## TODO: email verification by sending email to email given in account creatin
