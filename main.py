@@ -38,7 +38,7 @@ app.mount("/QR_codes", StaticFiles(directory="QR_codes"),name="qr_codes")
 orgins=[
     "http://localhost:5174",
     "http://localhost:5173",
-    "https://url-shortner-rho-lac.vercel.app/"
+    "https://url-shortner-rho-lac.vercel.app"
 
 ]
 app.add_middleware(
