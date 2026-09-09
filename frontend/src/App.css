@@ -1,9 +1,5 @@
-/* App.css - Global styles for the URL Shortener frontend
-   Theme: light, minimal, clean. No animations.
-   Uses system-safe fonts.
-*/
 
-/* ── Reset & Base ─────────────────────────────────────────────── */
+/* Reset & Base */
 *,
 *::before,
 *::after {
@@ -20,7 +16,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── Navbar ───────────────────────────────────────────────────── */
+/*  Navbar */
 .navbar {
   display: flex;
   align-items: center;
@@ -92,7 +88,7 @@ body {
   background-color: #f0f0f0;
 }
 
-/* ── Profile Dropdown ─────────────────────────────────────────── */
+/* Profile Dropdown */
 .profile-dropdown {
   position: absolute;
   top: 44px;
@@ -127,7 +123,7 @@ body {
   border-top: 1px solid #eee;
 }
 
-/* ── Page Layout ──────────────────────────────────────────────── */
+/* Page Layout  */
 /* For login/create-account forms - centered vertically and horizontally */
 .page-center {
   display: flex;
@@ -144,7 +140,7 @@ body {
   padding: 0 24px;
 }
 
-/* ── Card ─────────────────────────────────────────────────────── */
+/* Card */
 .card {
   background: #fff;
   border: 1px solid #e0e0e0;
@@ -166,7 +162,7 @@ body {
   color: #222;
 }
 
-/* ── Form ─────────────────────────────────────────────────────── */
+/* Form */
 .form {
   display: flex;
   flex-direction: column;
@@ -247,7 +243,7 @@ body {
   font-size: 0.875rem;
 }
 
-/* ── Buttons ──────────────────────────────────────────────────── */
+/* Buttons */
 .btn {
   padding: 9px 20px;
   border: none;
@@ -290,7 +286,7 @@ body {
   background-color: #1e8449;
 }
 
-/* ── Messages ─────────────────────────────────────────────────── */
+/*  Messages */
 .message {
   font-size: 0.875rem;
   padding: 8px 12px;
@@ -330,7 +326,7 @@ body {
   line-height: 1.7;
 }
 
-/* ── Result Box ───────────────────────────────────────────────── */
+/* Result Box  */
 .result-box {
   margin-top: 12px;
   padding: 10px 14px;
@@ -356,7 +352,7 @@ body {
   word-break: break-all;
 }
 
-/* ── Link ─────────────────────────────────────────────────────── */
+/* Link */
 .link {
   color: #4a90e2;
   text-decoration: none;
@@ -366,7 +362,7 @@ body {
   text-decoration: underline;
 }
 
-/* ── Shorten Page Hero ────────────────────────────────────────── */
+/*  Shorten Page Hero  */
 .shorten-hero {
   text-align: center;
   margin-bottom: 24px;
@@ -396,7 +392,7 @@ body {
   margin-bottom: 24px;
 }
 
-/* ── Operations Section ───────────────────────────────────────── */
+/*  Operations Section */
 .operations-section {
   margin-top: 8px;
 }
@@ -408,7 +404,7 @@ body {
   margin-bottom: 14px;
 }
 
-/* ── Dropdown Card ────────────────────────────────────────────── */
+/*  Dropdown Card */
 .dropdown-card {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -446,7 +442,7 @@ body {
   border-top: 1px solid #e0e0e0;
 }
 
-/* ── Dashboard ────────────────────────────────────────────────── */
+/* Dashboard  */
 .welcome-text {
   font-size: 1.1rem;
   font-weight: 500;
@@ -462,11 +458,19 @@ body {
   margin-bottom: 24px;
 }
 
-/* ── Table ────────────────────────────────────────────────────── */
+/* Table  */
 .table-wrapper {
-  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #eee;
 }
-
+/*My Links section*/
+.my-links-table-wrapper {
+  max-height: 225px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
 .link-table {
   width: 100%;
   border-collapse: collapse;
@@ -481,16 +485,19 @@ body {
   font-weight: 600;
   border-bottom: 2px solid #e0e0e0;
   white-space: nowrap;
+  position: sticky;        /* header stays visible while scrolling */
+  top: 0;
+  z-index: 1;
 }
 
 .link-table td {
   padding: 10px 12px;
   border-bottom: 1px solid #eee;
   color: #333;
-  max-width: 260px;
+  max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap;     /* keep ellipsis; prevents horizontal blowout */
 }
 
 .link-table tr:last-child td {
@@ -516,13 +523,13 @@ body {
   padding: 8px 0;
 }
 
-/* ── Loader text ──────────────────────────────────────────────── */
+/* Loader text */
 .loader-text {
   font-size: 0.875rem;
   color: inherit;
 }
 
-/* ── QR Code "View" button inside table ───────────────────────── */
+/* QR Code "View" button inside table */
 .btn-qr-view {
   background: none;
   border: 1px solid #4a90e2;
@@ -537,7 +544,7 @@ body {
   background-color: #eaf2ff;
 }
 
-/* ── QR Code Modal ────────────────────────────────────────────── */
+/* QR Code Modal  */
 .qr-modal-backdrop {
   position: fixed;
   inset: 0;                       /* top/right/bottom/left: 0 */

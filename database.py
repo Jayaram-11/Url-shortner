@@ -253,7 +253,7 @@ def fetch_all_details(user_id):
         with create_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-            SELECT  ORIGINAL_URL, CUSTOMIZED_CODE, CLICK_COUNT, CREATED_AT FROM URL_MAPPING WHERE UID =? ORDER BY CLICK_COUNT DESC LIMIT 5;""",
+            SELECT  ORIGINAL_URL, CUSTOMIZED_CODE, CLICK_COUNT FROM URL_MAPPING WHERE UID =? ORDER BY CLICK_COUNT DESC LIMIT 5;""",
                            (user_id,))
             record=cursor.fetchall()
             user_details=[]
@@ -263,7 +263,6 @@ def fetch_all_details(user_id):
                     "custom_code": row[1],
                     "custom_url": f"{DOMAIN}/{row[1]}",
                     "click_count": row[2],
-                    "created_at": row[3],
                     "qr_url":f"{DOMAIN}/QR_codes/{row[1]}_qrcode.png"
                 })
             return user_details

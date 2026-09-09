@@ -20,7 +20,6 @@ const dashboardColumns = [
   { key: "custom_code", label: "Short Code" },
   { key: "custom_url", label: "Short Link" },
   { key: "click_count", label: "Click Count" },
-  { key: "created_at", label: "Created At" },
 ];
 
 // Columns for My Links table (/my-urls does not return click_count)
@@ -50,11 +49,13 @@ function Dashboard() {
     async function fetchDashboard() {
       const res = await getDashboard();
       setDashboardLoading(false);
+
       if (res.ok) {
         setUserName(res.data.data.name);
         setTopUrls(res.data.data.dashboard);
       } else {
         const code = res.data?.detail?.error?.code;
+
         if (code === "NOT_FOUND") {
           setTopUrls([]);
         } else {
@@ -62,6 +63,7 @@ function Dashboard() {
         }
       }
     }
+
     fetchDashboard();
   }, []);
 
@@ -70,10 +72,12 @@ function Dashboard() {
     async function fetchMyUrls() {
       const res = await getMyUrls();
       setMyUrlsLoading(false);
+
       if (res.ok) {
         setMyUrls(res.data.data);
       } else {
         const code = res.data?.detail?.error?.code;
+
         if (code === "NOT_FOUND") {
           setMyUrls([]);
         } else {
@@ -81,6 +85,7 @@ function Dashboard() {
         }
       }
     }
+
     fetchMyUrls();
   }, []);
 
@@ -91,13 +96,23 @@ function Dashboard() {
       {/* ── Top 5 URLs ── */}
       <section className="dashboard-section">
         <h2 className="section-title">Dashboard — Top 5 URLs</h2>
-        {dashboardLoading && <p><Loader /></p>}
-        {dashboardError && <p className="message message-error">{dashboardError}</p>}
+
+        {dashboardLoading && (
+          <p>
+            <Loader />
+          </p>
+        )}
+
+        {dashboardError && (
+          <p className="message message-error">{dashboardError}</p>
+        )}
+
         {!dashboardLoading && !dashboardError && (
           <LinkTable
             columns={dashboardColumns}
             rows={topUrls}
             onQrView={(customCode) => setActiveQrCode(customCode)}
+            wrapperClass="table-wrapper"
           />
         )}
       </section>
@@ -105,13 +120,23 @@ function Dashboard() {
       {/* ── My Links ── */}
       <section className="dashboard-section">
         <h2 className="section-title">My Links</h2>
-        {myUrlsLoading && <p><Loader /></p>}
-        {myUrlsError && <p className="message message-error">{myUrlsError}</p>}
+
+        {myUrlsLoading && (
+          <p>
+            <Loader />
+          </p>
+        )}
+
+        {myUrlsError && (
+          <p className="message message-error">{myUrlsError}</p>
+        )}
+
         {!myUrlsLoading && !myUrlsError && (
           <LinkTable
             columns={myUrlsColumns}
             rows={myUrls}
             onQrView={(customCode) => setActiveQrCode(customCode)}
+            wrapperClass="my-links-table-wrapper"
           />
         )}
       </section>

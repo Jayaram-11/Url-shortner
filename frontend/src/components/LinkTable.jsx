@@ -5,7 +5,7 @@
 //   onQrView  : optional callback(qrUrl) — when provided, adds a "QR Code" column
 //               with a "View" button in each row that calls onQrView(row.qr_url)
 
-function LinkTable({ columns, rows, onQrView }) {
+function LinkTable({ columns, rows, onQrView, wrapperClass = "table-wrapper" }) {
   if (!rows || rows.length === 0) {
     return <p className="no-data">No records found.</p>;
   }
@@ -13,7 +13,7 @@ function LinkTable({ columns, rows, onQrView }) {
   const showQrColumn = typeof onQrView === "function";
 
   return (
-    <div className="table-wrapper">
+    <div className={wrapperClass}>
       <table className="link-table">
         <thead>
           <tr>
